@@ -8,11 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
-  {
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/forthmedia/fm.git"
-    }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forthmedia/fm.git"
   },
   "private": true,
   "dependencies": {
