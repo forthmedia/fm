@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+$fm-blue: #ADADFF;
+$fm-light-grey: #EEEEEE;
+$fm-grey: #DDDDDD;
+$fm-dark-grey: #777777;
+$fm-gold: #FF9900;
+$fm-red: #FF0033;
+
+$nav-height: 40px;
+
+h1, h2, h3, h4, h5, h6, button, nav a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+}
+body {
+    font-family: 'Raleway', sans-serif;
+    margin: 0; 
+}
+.content {
+    width: 60%;
+}

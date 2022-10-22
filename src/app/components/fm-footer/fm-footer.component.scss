@@ -1,0 +1,19 @@
+@import 'src/styles.scss';
+
+:host {
+    margin-top: auto;
+
+    footer {
+        display: flex;
+        justify-content: center;
+        background-color: black;
+        color: white;
+        padding: 36px 0;
+
+        a {
+            color: $fm-gold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+}

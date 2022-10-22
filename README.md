@@ -1,3 +1,3 @@
 # Fm
 
-Forthmedia web site. Basic Angular app with vision statement.
+Forthmedia web site. Phase 1: Baseline components, layout and CSS.
