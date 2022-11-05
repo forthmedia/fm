@@ -5,8 +5,8 @@ import {FmHomeComponent} from './components/fm-home/fm-home.component';
 import { FmProjectComponent } from './components/fm-project/fm-project.component';
 
 const routes: Routes = [
-  { path: '', component: FmHomeComponent },
   { path: 'project', component: FmProjectComponent },
+  { path: '', component: FmHomeComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' }
 ];
 
