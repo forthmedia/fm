@@ -1,0 +1,28 @@
+@import 'src/styles.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: $nav-height;
+
+    .fm-project {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+
+        .fm-card {
+            max-width: 400px;
+            margin: 24px 0;
+        }
+        .fm-card-image {
+            background-image: url('/assets/fmCamera-Icon.png');
+            background-size: cover;
+        }
+
+        .mat-card {
+            font-family: inherit;
+        }
+    }
+}
