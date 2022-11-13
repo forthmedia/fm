@@ -1,0 +1,61 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$fm-blue-palette: (
+    50: #ecebff,
+    100: #cecdff,
+    200: #adadff,
+    300: #8c8cf9,
+    400: #7771ed,
+    500: #6555e1,
+    600: #5f4cd5,
+    700: #5640c8,
+    800: #5035bb,
+    900: #451ea3,
+    contrast: (
+        50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: rgba(black, 0.87),
+        400: rgba(black, 0.87),
+        500: white,
+        600: white,
+        700: white,
+        800: white,
+        900: white
+    )
+);
+
+$fm-gold-palette: (
+    50: #fff8e0,
+    100: #ffedb0,
+    200: #ffe17c,
+    300: #ffd743,
+    400: #ffcc00,
+    500: #ffc300,
+    600: #ffb500,
+    700: #ffa100,
+    800: #ff8f00,
+    900: #ff6d00,
+    contrast: (
+        50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: rgba(black, 0.87),
+        400: rgba(black, 0.87),
+        500: white,
+        600: white,
+        700: white,
+        800: white,
+        900: white
+    )
+);
+
+$fm-app-primary: mat-palette($fm-blue-palette);
+$fm-app-accent:  mat-palette($fm-gold-palette, 200);
+$fm-app-warn:    mat-palette($mat-red);
+
+$fm-app-theme: mat-light-theme($fm-app-primary, $fm-app-accent, $fm-app-warn);
+
+@include angular-material-theme($fm-app-theme);
