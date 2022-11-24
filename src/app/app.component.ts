@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
-
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,7 +10,10 @@ export class AppComponent {
   title = 'forthmedia';
   uid: string = '';
 
-  constructor(public auth: Auth) {
+  constructor(
+    public auth: Auth,
+    private authService: AuthService,
+  ) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.uid = user.uid!;
@@ -21,6 +24,6 @@ export class AppComponent {
   }
 
   logout(): void {
-    this.auth.signOut();
+    this.authService.logout();
   }
 }

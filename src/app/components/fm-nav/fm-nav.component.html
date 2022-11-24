@@ -3,12 +3,12 @@
         <a routerLink="/">fm</a>
         <a routerLink="/project">projects</a>
         <a href="https://forth-media.com/blog/">blog</a>
-        <ng-container *ngIf="!uid; else logout">
+        <ng-container *ngIf="!uid; else logged_in">
             <a routerLink="/signup">sign up</a>
         </ng-container>
-        <ng-template #logout>
+        <ng-template #logged_in>
             <a routerLink="/dashboard">dashboard</a>
-            <a routerLink="/">log out</a>
+            <a (click)="logout()">log out</a>
         </ng-template>
     </nav>
 </header>
