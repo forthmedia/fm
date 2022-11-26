@@ -34,18 +34,18 @@ export class FmSignupComponent implements OnInit {
   }
 
   public onSubmit() {
-    console.log(this.signupForm.value);
     if (this.signupForm.invalid)
       return;
 
-    this.authService.signup(this.signupForm.value).then(result => {
-      if (result === null)
-        this.router.navigate(['/dashboard']);
-      else
-        this.firebaseErrorMessage = result.message;
-    })
-    .catch(() => {
-
-    });
+    this.authService.signup(this.signupForm.value)
+      .then(result => {
+        console.log(result);
+        if (result === true) {
+          this.router.navigate(['/dashboard']);
+        }
+     })
+      .catch(error => {
+        this.firebaseErrorMessage = error;
+      });
   }
 }

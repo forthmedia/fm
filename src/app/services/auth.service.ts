@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+  isSignedIn: boolean = false;
 
   constructor(
     private router: Router,
@@ -14,22 +15,29 @@ export class AuthService {
 
   signup(user: any): Promise<any> {
     return createUserWithEmailAndPassword(this.auth, user.email, user.password)
-    .then(response => {
-      console.log(response);
+    .then(userCredential => {
+      console.log('register success: ' + userCredential);
+      this.isSignedIn = true;
+      return this.isSignedIn;
     })
     .catch(error => {
       console.error('Signup error ' + error);
-      return { isValid: false, message: error.message };
+      this.isSignedIn = false;
+      return this.isSignedIn;
     })
   }
 
   login(email: string, password: string): Promise<any> {
     return signInWithEmailAndPassword(this.auth, email, password)
-      .then(() => {
+      .then(userCredential => {
         console.log('login: success');
+        this.isSignedIn = true;
+        return this.isSignedIn;
       })
       .catch(error => {
         console.error('Login error ' + error);
+        this.isSignedIn = false;
+        return this.isSignedIn;
       })
   }
 

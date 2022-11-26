@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
 @Component({
@@ -13,6 +14,7 @@ export class AppComponent {
   constructor(
     public auth: Auth,
     private authService: AuthService,
+    private router: Router,
   ) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -25,5 +27,6 @@ export class AppComponent {
 
   logout(): void {
     this.authService.logout();
+    this.router.navigate(['/home'])
   }
 }
