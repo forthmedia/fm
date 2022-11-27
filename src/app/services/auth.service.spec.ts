@@ -33,4 +33,9 @@ describe('AuthService', () => {
   it('should have logout function', () => {
     expect(service.logout).toBeDefined();
   });
+
+  it('should have getDisplayName function', () => {
+    expect(service.displayName).toBeDefined();
+    expect(service.getDisplayName).toBeDefined();
+  });
 });

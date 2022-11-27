@@ -38,9 +38,8 @@ export class FmLoginComponent implements OnInit {
       return;
 
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
-      .then(result => {
-        console.log(result);
-        if (result === true) {
+      .then(value => {
+        if (value === true) {
           this.router.navigate(['/dashboard']);
         }
      })

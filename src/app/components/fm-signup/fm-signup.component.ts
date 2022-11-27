@@ -23,6 +23,10 @@ export class FmSignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
+      displayName: this.formBuilder.control('', [
+        Validators.required,
+        Validators.minLength(3)
+      ]),
       email: this.formBuilder.control('', [
         Validators.required,
         Validators.email
@@ -37,10 +41,9 @@ export class FmSignupComponent implements OnInit {
     if (this.signupForm.invalid)
       return;
 
-    this.authService.signup(this.signupForm.value)
-      .then(result => {
-        console.log(result);
-        if (result === true) {
+    this.authService.signup(this.signupForm.value.displayName, this.signupForm.value.email, this.signupForm.value.password)
+      .then(value => {
+        if (value === true) {
           this.router.navigate(['/dashboard']);
         }
      })

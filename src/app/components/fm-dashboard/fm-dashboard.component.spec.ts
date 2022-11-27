@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 import { FmDashboardComponent } from './fm-dashboard.component';
+import { environment } from '../../../environments/environment';
 
 describe('FmDashboardComponent', () => {
   let component: FmDashboardComponent;
@@ -8,7 +11,13 @@ describe('FmDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FmDashboardComponent ]
+      imports: [
+        provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+        provideAuth(() => getAuth()),        
+      ],
+      declarations: [
+        FmDashboardComponent
+      ]
     })
     .compileComponents();
 
@@ -20,4 +29,9 @@ describe('FmDashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have user displayName', () => {
+    component.displayName = 'Foo';
+    expect(component.displayName).toBe('Foo');
+  })
 });

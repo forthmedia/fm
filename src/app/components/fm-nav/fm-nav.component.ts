@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+
 @Component({
   selector: 'fm-nav',
   templateUrl: './fm-nav.component.html',
@@ -6,7 +7,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FmNavComponent {
-  @Input() uid: string = '';
+  @Input() isSignedIn?: boolean;
   @Output() onLogout: EventEmitter<void> = new EventEmitter();
 
   logout(): void {

@@ -3,6 +3,12 @@
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
             <div>
                 <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input formControlName="displayName" type="text" matInput placeholder="Name">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
                     <input formControlName="email" type="email" matInput placeholder="Email">
                 </mat-form-field>

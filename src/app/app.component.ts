@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
@@ -7,22 +7,23 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'forthmedia';
-  uid: string = '';
-
+  isSignedIn: boolean = false;
   constructor(
-    public auth: Auth,
     private authService: AuthService,
     private router: Router,
-  ) {
-    onAuthStateChanged(auth, (user) => {
+    private auth: Auth
+  ) {}
+
+  ngOnInit(): void {
+    onAuthStateChanged(this.auth, user => {
       if (user) {
-        this.uid = user.uid!;
+        this.isSignedIn = true;
       } else {
-        this.uid = '';
+        this.isSignedIn = false;
       }
-    })
+    });
   }
 
   logout(): void {

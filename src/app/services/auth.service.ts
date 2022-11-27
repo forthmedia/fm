@@ -1,27 +1,37 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { Router } from '@angular/router';
-
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, UserCredential, updateProfile } from '@angular/fire/auth';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   isSignedIn: boolean = false;
+  displayName: string = '';
 
   constructor(
-    private router: Router,
     private auth: Auth
-  ) { }
+  ) {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        this.isSignedIn = true;
+        this.displayName = user.displayName!;
+      } else {
+        this.isSignedIn = false;
+        this.displayName = '';
+      }
+    });
+  }
 
-  signup(user: any): Promise<any> {
-    return createUserWithEmailAndPassword(this.auth, user.email, user.password)
-    .then(userCredential => {
-      console.log('register success: ' + userCredential);
+  signup(displayName: string, email: string, password: string): Promise<any> {
+    return createUserWithEmailAndPassword(this.auth, email, password)
+    .then((userCredential: UserCredential) => {
+      updateProfile(userCredential.user, {displayName});
+    })
+    .then(() => {
+      this.displayName = displayName;
       this.isSignedIn = true;
       return this.isSignedIn;
     })
     .catch(error => {
-      console.error('Signup error ' + error);
       this.isSignedIn = false;
       return this.isSignedIn;
     })
@@ -30,19 +40,20 @@ export class AuthService {
   login(email: string, password: string): Promise<any> {
     return signInWithEmailAndPassword(this.auth, email, password)
       .then(userCredential => {
-        console.log('login: success');
         this.isSignedIn = true;
         return this.isSignedIn;
       })
       .catch(error => {
-        console.error('Login error ' + error);
         this.isSignedIn = false;
         return this.isSignedIn;
       })
   }
 
   logout() {
-    console.log('GOT LOGOUT CALL');
     this.auth.signOut();
+  }
+
+  public getDisplayName(): string {
+    return this.displayName;
   }
 }

@@ -1,5 +1,5 @@
 <div class="app-component">
-    <fm-nav [uid]="uid" (onLogout)="logout()"></fm-nav>
+    <fm-nav [isSignedIn]="isSignedIn" (onLogout)="logout()"></fm-nav>
     <router-outlet></router-outlet>
     <fm-footer></fm-footer>
 </div>
