@@ -3,17 +3,24 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 
 import { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard';
 import { environment } from '../../environments/environment';
 
 describe('AuthService', () => {
   let service: AuthService;
+  let mockAuthGuard: AuthGuard;
 
   beforeEach(async () => {
+    mockAuthGuard = jasmine.createSpyObj('AuthGuard', ['canActivate']);
+
     await TestBed.configureTestingModule({
       imports: [
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
         provideAuth(() => getAuth()),        
       ],
+      providers: [
+        {provide: AuthGuard, useValue: mockAuthGuard}
+      ]
     });
     service = TestBed.inject(AuthService);
   });
@@ -22,6 +29,10 @@ describe('AuthService', () => {
     expect(service).toBeTruthy();
   });
 
+  it('should have AuthGuard', () => {
+    expect(mockAuthGuard.canActivate).toBeDefined();
+  })
+ 
   it('should have signup function', () => {
     expect(service.signup).toBeDefined();
   });
@@ -35,7 +46,12 @@ describe('AuthService', () => {
   });
 
   it('should have getDisplayName function', () => {
-    expect(service.displayName).toBeDefined();
+    expect(service['displayName']).toBeDefined();
     expect(service.getDisplayName).toBeDefined();
   });
+
+  it('should have getIsSignedIn function', () => {
+    expect(service['isSignedIn']).toBeDefined();
+    expect(service.getIsSignedIn).toBeDefined();
+  })
 });

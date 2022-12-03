@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, UserCredential, updateProfile } from '@angular/fire/auth';
+import { Observable, of as observableOf } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  isSignedIn: boolean = false;
-  displayName: string = '';
+  private isSignedIn: boolean = false;
+  private displayName: string = '';
 
   constructor(
     private auth: Auth
@@ -55,5 +56,9 @@ export class AuthService {
 
   public getDisplayName(): string {
     return this.displayName;
+  }
+
+  public getIsSignedIn(): Observable<boolean> {
+    return observableOf(this.isSignedIn);
   }
 }

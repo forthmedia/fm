@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'forthmedia';
-  isSignedIn: boolean = false;
+  $isSignedIn!: boolean;
+  private unsubscribe = new Subject<void>();
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -17,13 +20,18 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    onAuthStateChanged(this.auth, user => {
-      if (user) {
-        this.isSignedIn = true;
-      } else {
-        this.isSignedIn = false;
-      }
+    onAuthStateChanged(this.auth, () => {
+      this.authService.getIsSignedIn()
+        .pipe(takeUntil(this.unsubscribe))
+        .subscribe(value => {
+          this.$isSignedIn = value;
+      });      
     });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();  
   }
 
   logout(): void {

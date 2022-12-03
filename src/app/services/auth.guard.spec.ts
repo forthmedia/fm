@@ -21,4 +21,8 @@ describe('AuthGuard', () => {
   it('should be created', () => {
     expect(guard).toBeTruthy();
   });
+
+  it('should have canActivate', () => {
+    expect(guard.canActivate).toBeDefined();
+  })
 });
