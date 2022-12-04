@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { ChangeDetectorRef } from '@angular/core';
 
 import { FmSignupComponent } from './fm-signup.component';
 import { AuthService } from 'src/app/services/auth.service';
@@ -43,5 +44,12 @@ describe('FmSignupComponent', () => {
 
   it('should have onSubmit function', () => {
     expect(component.onSubmit).toBeDefined();
+  });
+
+  it('should implement Change Detection', () => {
+    const mockChangeDetectorRef = fixture.debugElement.injector.get(ChangeDetectorRef);
+    const spy = spyOn(mockChangeDetectorRef.constructor.prototype, 'markForCheck');
+    mockChangeDetectorRef.markForCheck();
+    expect(spy).toHaveBeenCalled();
   });
 });

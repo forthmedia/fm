@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, UserCredential, updateProfile } from '@angular/fire/auth';
 import { Observable, of as observableOf } from 'rxjs';
+
+export const FIREBASE_AUTH_OK: string = '';
 @Injectable({
   providedIn: 'root'
 })
@@ -30,23 +32,23 @@ export class AuthService {
     .then(() => {
       this.displayName = displayName;
       this.isSignedIn = true;
-      return this.isSignedIn;
+      return FIREBASE_AUTH_OK;
     })
     .catch(error => {
       this.isSignedIn = false;
-      return this.isSignedIn;
+      return error;
     })
   }
 
   login(email: string, password: string): Promise<any> {
     return signInWithEmailAndPassword(this.auth, email, password)
-      .then(userCredential => {
+      .then(() => {
         this.isSignedIn = true;
-        return this.isSignedIn;
+        return FIREBASE_AUTH_OK;
       })
       .catch(error => {
         this.isSignedIn = false;
-        return this.isSignedIn;
+        return error;
       })
   }
 

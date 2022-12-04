@@ -10,7 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'forthmedia';
-  $isSignedIn!: boolean;
+  isSignedIn?: boolean;
   private unsubscribe = new Subject<void>();
 
   constructor(
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.authService.getIsSignedIn()
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(value => {
-          this.$isSignedIn = value;
+          this.isSignedIn = value;
       });      
     });
   }

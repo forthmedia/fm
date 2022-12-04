@@ -12,5 +12,15 @@
         align-items: center;
         box-sizing: border-box;
 
+        mat-card {
+            max-width: $form-width;
+
+            .form-error {
+                margin-bottom: 8px;
+            }
+            mat-form-field {
+                width: $form-width;
+            }
+        }
     }
 }

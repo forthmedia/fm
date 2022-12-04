@@ -10,10 +10,16 @@
         color: white;
         padding: 36px 0;
 
+        .left {
+            width: 50%;
+        }
         a {
             color: $fm-gold;
             text-decoration: none;
             cursor: pointer;
+        }
+        .firebase {
+            width: 100px;
         }
     }
 }
