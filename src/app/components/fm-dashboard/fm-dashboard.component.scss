@@ -14,15 +14,39 @@
         box-sizing: border-box;
         height: 100%;
 
-        .technology {
+        footer {
+            display: flex;
+            flex-direction: column;
+
+            background-color: $fm-blue-grey;
             margin-top: auto;
-            margin-bottom: 10px;
-            i {
-                margin-right: 8px;
+            width: 100vw;
+
+            .blog-promo {
+                align-self: center;
+                width: 60%;
+
+                a {
+                    color: $fm-gold;
+                    font-weight: 600;
+                    text-decoration: none;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
             }
-            .jumbo {
-                font-size: xx-large;
-            }
+            .technology {
+                display: flex;
+                justify-content: center;
+                background-color: $fm-blue-grey;
+                padding-bottom: 10px;
+                i {
+                    margin-right: 8px;
+                }
+                .jumbo {
+                    font-size: xx-large;
+                }
+            }    
         }
     }
 }
