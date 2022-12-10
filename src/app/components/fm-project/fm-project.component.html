@@ -7,15 +7,18 @@
         </mat-card-header>
         <img mat-card-image src="/assets/cgjung-at-beach.jpeg" alt="AI rendered image">
         <mat-card-content>
-            <p>
+            <div>
             Stable Diffusion is a state of the art AI model that generates images from text.
-            </p>
+            </div>
         </mat-card-content>
-        <!-- TODO: Buttons should send user to blog to like and share. 
-        <mat-card-actions>
-            <button mat-raised-button color="accent">LIKE</button>
-            <button mat-raised-button color="primary">SHARE</button>
-        </mat-card-actions>
-        -->
-    </mat-card>
+        <mat-card-actions [ngClass]="(isSignedIn ? 'space-between' : 'flex-end')">
+            <ng-container *ngIf="isSignedIn">
+                <button mat-raised-button color="primary" (click)="onLike()">LIKE</button>
+            </ng-container>
+            <span class="likes-container">
+                <mat-icon fontIcon="favorite">favorite</mat-icon>
+                <span class="likes">{{likes}}</span>
+            </span>
+        </mat-card-actions>    
+</mat-card>
 </div>

@@ -52,8 +52,8 @@ export class AuthService {
       })
   }
 
-  logout() {
-    this.auth.signOut();
+  async logout() {
+    await this.auth.signOut();
   }
 
   public getDisplayName(): string {

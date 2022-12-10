@@ -21,8 +21,30 @@
             background-size: cover;
         }
 
-        .mat-card {
+        mat-card {
             font-family: inherit;
+
+            mat-card-actions {
+                display: flex;
+                align-items: center;
+                padding-left: 4px;
+                padding-right: 4px;
+                
+                &.flex-end {
+                    justify-content: flex-end;
+                }
+                &.space-between {
+                    justify-content: space-between;
+                }
+                .likes-container {
+                    display: flex;
+                    justify-content: center;
+
+                    .likes {
+                        margin-left: 8px;
+                    }
+                }
+            }
         }
     }
 }

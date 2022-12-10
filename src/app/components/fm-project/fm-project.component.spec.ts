@@ -1,6 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { ChangeDetectorRef } from '@angular/core';
 
 import { FmProjectComponent } from './fm-project.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { environment } from '../../../environments/environment';
 
 describe('FmProjectComponent', () => {
   let component: FmProjectComponent;
@@ -8,7 +13,16 @@ describe('FmProjectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FmProjectComponent ]
+      imports: [
+        provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+        provideAuth(() => getAuth()),        
+      ],
+      providers: [
+        AuthService
+      ],      
+      declarations: [
+        FmProjectComponent,
+      ]
     })
     .compileComponents();
 
@@ -19,5 +33,22 @@ describe('FmProjectComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have Like button if Signed in', fakeAsync(() => {
+    spyOn(component, 'onLike');
+    component.isSignedIn = true;
+    fixture.detectChanges();
+    let button = fixture.debugElement.nativeElement.querySelector('button');
+    button.click();
+    tick();
+    expect(component.onLike).toHaveBeenCalled();
+  }));
+
+  it('should implement Change Detection', () => {
+    const mockChangeDetectorRef = fixture.debugElement.injector.get(ChangeDetectorRef);
+    const spy = spyOn(mockChangeDetectorRef.constructor.prototype, 'markForCheck');
+    mockChangeDetectorRef.markForCheck();
+    expect(spy).toHaveBeenCalled();
   });
 });
