@@ -27,19 +27,18 @@
             mat-card-actions {
                 display: flex;
                 align-items: center;
-                padding-left: 4px;
-                padding-right: 4px;
-                
-                &.flex-end {
-                    justify-content: flex-end;
-                }
-                &.space-between {
-                    justify-content: space-between;
-                }
+                justify-content: center;
+
                 .likes-container {
                     display: flex;
                     justify-content: center;
 
+                    .disabled {
+                        color: $fm-blue-grey;
+                    }
+                    .user-liked {
+                        color: $fm-red;
+                    }
                     .likes {
                         margin-left: 8px;
                     }

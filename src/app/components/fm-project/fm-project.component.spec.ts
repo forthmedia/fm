@@ -28,6 +28,7 @@ describe('FmProjectComponent', () => {
 
     fixture = TestBed.createComponent(FmProjectComponent);
     component = fixture.componentInstance;
+    component.isSignedIn = true;
     fixture.detectChanges();
   });
 
@@ -35,11 +36,9 @@ describe('FmProjectComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have Like button if Signed in', fakeAsync(() => {
+  it('should have Like button', fakeAsync(() => {
     spyOn(component, 'onLike');
-    component.isSignedIn = true;
-    fixture.detectChanges();
-    let button = fixture.debugElement.nativeElement.querySelector('button');
+    let button = fixture.debugElement.nativeElement.querySelector('.likes-container');
     button.click();
     tick();
     expect(component.onLike).toHaveBeenCalled();

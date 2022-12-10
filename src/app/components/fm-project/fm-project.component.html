@@ -11,14 +11,20 @@
             Stable Diffusion is a state of the art AI model that generates images from text.
             </div>
         </mat-card-content>
-        <mat-card-actions [ngClass]="(isSignedIn ? 'space-between' : 'flex-end')">
-            <ng-container *ngIf="isSignedIn">
-                <button mat-raised-button color="primary" (click)="onLike()">LIKE</button>
+        <mat-card-actions>
+            <ng-container *ngIf="!isSignedIn; else signed_in">
+                <div class="likes-container">
+                    <mat-icon class="disabled">favorite_border</mat-icon>
+                    <span class="likes">{{likes}}</span>
+                </div>                    
             </ng-container>
-            <span class="likes-container">
-                <mat-icon fontIcon="favorite">favorite</mat-icon>
-                <span class="likes">{{likes}}</span>
-            </span>
+            <ng-template #signed_in>
+                <div class="likes-container" (click)="onLike()">
+                    <mat-icon *ngIf="!userLiked">favorite_border</mat-icon>
+                    <mat-icon *ngIf="userLiked" class="user-liked">favorite</mat-icon>
+                    <span class="likes">{{likes}}</span>
+                </div>    
+            </ng-template>
         </mat-card-actions>    
 </mat-card>
 </div>

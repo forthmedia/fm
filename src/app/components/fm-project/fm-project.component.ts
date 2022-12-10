@@ -12,6 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class FmProjectComponent implements OnInit, OnDestroy {
   isSignedIn?: boolean;
   likes: number = 1;
+  userLiked: boolean = false;
   private unsubscribe = new Subject<void>();
 
   constructor(
@@ -37,7 +38,12 @@ export class FmProjectComponent implements OnInit, OnDestroy {
   }
 
   onLike() {
-    this.likes++;
+    this.userLiked = !this.userLiked;
+    if (this.userLiked) {
+      this.likes++;
+    } else {
+      this.likes--;
+    }
     this.change.markForCheck();
   }
 }
