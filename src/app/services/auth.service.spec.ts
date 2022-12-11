@@ -46,7 +46,7 @@ describe('AuthService', () => {
   });
 
   it('should have getDisplayName function', () => {
-    expect(service['displayName']).toBeDefined();
+    expect(service['user']).toBeDefined();
     expect(service.getDisplayName).toBeDefined();
   });
 

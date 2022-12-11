@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, UserCredential, updateProfile } from '@angular/fire/auth';
 import { Observable, of as observableOf } from 'rxjs';
 
+import { User } from '../models/user';
+
 export const FIREBASE_AUTH_OK: string = '';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private isSignedIn: boolean = false;
-  private displayName: string = '';
+  private user: User = {} as User;
+
 
   constructor(
     private auth: Auth
@@ -16,10 +19,11 @@ export class AuthService {
     onAuthStateChanged(auth, user => {
       if (user) {
         this.isSignedIn = true;
-        this.displayName = user.displayName!;
+        this.user.displayName = user.displayName!;
+        this.user.uid = user.uid;
       } else {
         this.isSignedIn = false;
-        this.displayName = '';
+        this.user = {} as User;
       }
     });
   }
@@ -27,15 +31,17 @@ export class AuthService {
   signup(displayName: string, email: string, password: string): Promise<any> {
     return createUserWithEmailAndPassword(this.auth, email, password)
     .then((userCredential: UserCredential) => {
+      this.user.displayName = displayName;
+      this.user.uid = userCredential.user.uid;
       updateProfile(userCredential.user, {displayName});
     })
     .then(() => {
-      this.displayName = displayName;
       this.isSignedIn = true;
       return FIREBASE_AUTH_OK;
     })
     .catch(error => {
       this.isSignedIn = false;
+      this.user = {} as User;
       return error;
     })
   }
@@ -48,6 +54,7 @@ export class AuthService {
       })
       .catch(error => {
         this.isSignedIn = false;
+        this.user = {} as User;
         return error;
       })
   }
@@ -57,7 +64,7 @@ export class AuthService {
   }
 
   public getDisplayName(): string {
-    return this.displayName;
+    return this.user.displayName;
   }
 
   public getIsSignedIn(): Observable<boolean> {
