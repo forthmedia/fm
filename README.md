@@ -4,6 +4,7 @@ Forthmedia web site.
 Phase 4: Baseline Dashboard extras and Blog promo.  
 4.1: Icon branding. Cross link. Like button on Project page if signed in.   
 4.2: Like button updates. Terms and conditions. Privacy policy.  
+4.3: Firebase emulators.  
 
 Phase 3: Baseline Firebase integration. Signup, Login, Dashboard.  
 3.1: Fix Karma test.  

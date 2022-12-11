@@ -19,9 +19,8 @@ import { FmDashboardComponent } from './components/fm-dashboard/fm-dashboard.com
 
 import { environment } from '../environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { getAuth, provideAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-
+import { getAuth, provideAuth, connectAuthEmulator } from '@angular/fire/auth';
+import { provideFirestore, getFirestore, connectFirestoreEmulator } from '@angular/fire/firestore';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,9 +42,22 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirebaseApp(() => {
+      const firebaseApp = initializeApp(environment.firebaseConfig)
+      return (firebaseApp)
+    }),
+    provideAuth(() => {
+      const auth = getAuth();
+      if (!environment.production)
+        connectAuthEmulator(auth, `http://localhost:9099`)
+      return (auth);
+    }),
+    provideFirestore(() => {
+      const firestore = getFirestore();
+      if (!environment.production)
+        connectFirestoreEmulator(firestore, 'localhost', 8080);
+      return(firestore);
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
