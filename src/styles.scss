@@ -7,6 +7,7 @@ $fm-dark-grey: #777777;
 $fm-gold: #FF9900;
 $fm-red: #FF0033;
 $fm-blue-grey: #cfd8dc;
+$fm-blue-dark: #7B7ECB;
 
 $nav-height: 40px;
 $form-width: 300px;
@@ -21,4 +22,12 @@ body {
 }
 .content {
     width: 60%;
+}
+a {
+    color: $fm-blue-dark;
+    font-weight: 600;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
 }

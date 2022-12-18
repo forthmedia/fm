@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { ChangeDetectorRef } from '@angular/core';
 
 import { FmProjectComponent } from './fm-project.component';
@@ -15,10 +17,12 @@ describe('FmProjectComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-        provideAuth(() => getAuth()),        
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),     
       ],
       providers: [
-        AuthService
+        AuthService,
+        { provide: MatDialog, useValue: {} },
       ],      
       declarations: [
         FmProjectComponent,

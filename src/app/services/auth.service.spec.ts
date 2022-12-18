@@ -45,9 +45,9 @@ describe('AuthService', () => {
     expect(service.logout).toBeDefined();
   });
 
-  it('should have getDisplayName function', () => {
+  it('should have getUser function', () => {
     expect(service['user']).toBeDefined();
-    expect(service.getDisplayName).toBeDefined();
+    expect(service.getUser).toBeDefined();
   });
 
   it('should have getIsSignedIn function', () => {

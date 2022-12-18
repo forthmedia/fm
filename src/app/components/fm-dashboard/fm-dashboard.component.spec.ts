@@ -31,7 +31,7 @@ describe('FmDashboardComponent', () => {
   });
 
   it('should have user displayName', () => {
-    component.displayName = 'Foo';
-    expect(component.displayName).toBe('Foo');
+    component.user.displayName = 'Foo';
+    expect(component.user.displayName).toBe('Foo');
   })
 });

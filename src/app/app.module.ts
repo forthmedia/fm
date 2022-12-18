@@ -4,8 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +23,7 @@ import { environment } from '../environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { provideFirestore, getFirestore, connectFirestoreEmulator } from '@angular/fire/firestore';
+import { FmSigninDialog } from './components/fm-signin-dialog/fm-signin-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,15 +33,18 @@ import { provideFirestore, getFirestore, connectFirestoreEmulator } from '@angul
     FmProjectComponent,
     FmSignupComponent,
     FmLoginComponent,
-    FmDashboardComponent
+    FmDashboardComponent,
+    FmSigninDialog,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatDialogModule,
     MatCardModule,
     MatIconModule,
     MatInputModule,
+    MatTooltipModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

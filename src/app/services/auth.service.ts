@@ -12,7 +12,6 @@ export class AuthService {
   private isSignedIn: boolean = false;
   private user: User = {} as User;
 
-
   constructor(
     private auth: Auth
   ) {
@@ -63,10 +62,10 @@ export class AuthService {
     await this.auth.signOut();
   }
 
-  public getDisplayName(): string {
-    return this.user.displayName;
+  public getUser(): User {
+    return this.user;
   }
-
+  
   public getIsSignedIn(): Observable<boolean> {
     return observableOf(this.isSignedIn);
   }
