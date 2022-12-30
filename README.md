@@ -4,7 +4,8 @@ Forthmedia web site.
 
 Phase 5: Firestore integration. UI upadtes.  
 5.1: Update.  
-5.2. Update blog Url.  
+5.2: Update blog Url.  
+5.3: Update packages  
 
 Phase 4: Baseline Dashboard extras and Blog promo.  
 4.1: Icon branding. Cross link. Like button on Project page if signed in.   
