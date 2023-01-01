@@ -9,6 +9,7 @@ Phase 5: Firestore integration. UI upadtes.
 5.4: More package updates.  
 5.5: Add ImageCard array. Flex layout.  
 5.6: Responsive design.  
+5.7: Mobile design.  
 
 Phase 4: Baseline Dashboard extras and Blog promo.  
 4.1: Icon branding. Cross link. Like button on Project page if signed in.   

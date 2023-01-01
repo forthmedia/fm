@@ -29,6 +29,9 @@
                     background-color: white;
                     color: black;
                 }
+                @media screen and (max-width: 640px) {
+                    font-size: small;
+                }
             }
         }
     }
