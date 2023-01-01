@@ -5,11 +5,11 @@
         <a href="https://blog.forth-media.com">blog</a>
         <ng-container *ngIf="!isSignedIn; else signed_in">
             <a routerLink="/signup">register</a>
-            <a routerLink="/login">sign in</a>
+            <a routerLink="/login">sign&nbsp;in</a>
         </ng-container>
         <ng-template #signed_in>
             <a routerLink="/dashboard">dashboard</a>
-            <a (click)="logout()">sign out</a>
+            <a (click)="logout()">sign&nbsp;out</a>
         </ng-template>
     </nav>
 </header>

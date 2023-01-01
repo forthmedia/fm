@@ -10,6 +10,7 @@ $fm-blue-grey: #cfd8dc;
 $fm-blue-dark: #7B7ECB;
 
 $content-width: 80%;
+$responsive-width: 98%;
 $max-width: 1440px;
 $nav-height: 40px;
 $form-width: 300px;
@@ -33,5 +34,12 @@ a {
     text-decoration: none;
     &:hover {
         text-decoration: underline;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .content {
+        width: $responsive-width;
+        padding: 0;
     }
 }
