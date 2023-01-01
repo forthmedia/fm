@@ -5,9 +5,45 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Firestore, arrayUnion, arrayRemove, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Subject, takeUntil } from 'rxjs';
 
-import {FmSigninDialog} from '../fm-signin-dialog/fm-signin-dialog.component';
+import { FmSigninDialog } from '../fm-signin-dialog/fm-signin-dialog.component';
 import { User } from '../../models/user';
+import { ImageCard } from 'src/app/models/image-card';
+import { environment } from 'src/environments/environment';
 
+const IMAGE_CARD_DATA: ImageCard[] = [
+  {
+    title: 'Carl Jung at the Beach',
+    subtitle: 'Stable Diffusion',
+    image: 'cgjung-at-beach.jpeg',
+    id: 'ee12ced5-bf10-49fc-93e8-b72478df9894',
+    likes: 0,
+    userLiked: false
+  },
+  {
+    title: 'Richard Feynman at Starbucks',
+    subtitle: 'Stable Diffusion',
+    image: 'feynman-starbucks.jpeg',
+    id: 'a548e061-1fe9-4e90-9373-90bd49c92fed',
+    likes: 0,
+    userLiked: false
+  },
+  {
+    title: 'Einstein plays dice',
+    subtitle: 'DALL-E 2',
+    image: 'einstein-dice-de2.png',
+    id: 'eda487e6-e2d6-4285-9b67-2102b50d39b8',
+    likes: 0,
+    userLiked: false
+  },
+  {
+    title: 'Nikola Tesla with iPhone',
+    subtitle: 'Stable Diffusion',
+    image: 'nikola-tesla-iphone-2.png',
+    id: 'ea521046-2e93-46fd-a706-db90fca35f6e',
+    likes: 0,
+    userLiked: false
+  }
+];
 @Component({
   selector: 'app-fm-project',
   templateUrl: './fm-project.component.html',
@@ -16,12 +52,10 @@ import { User } from '../../models/user';
 })
 export class FmProjectComponent implements OnInit, OnDestroy {
   isSignedIn?: boolean;
-  item1: string = 'ee12ced5-bf10-49fc-93e8-b72478df9894'; //Carl Jung at the Beach
-  item2: string = 'a548e061-1fe9-4e90-9373-90bd49c92fed'; //Richard Feynman at Starbucks
-  likes: number = 0;
-  userLiked: boolean = false;
   private user: User = {} as User;
   private unsubscribe = new Subject<void>();
+  imageCards = IMAGE_CARD_DATA;
+  contentLoaded: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -43,6 +77,7 @@ export class FmProjectComponent implements OnInit, OnDestroy {
 
     this.user = this.authService.getUser();
     this.getLikes();
+    this.contentLoaded = true;
   }
 
   ngOnDestroy(): void {
@@ -51,13 +86,6 @@ export class FmProjectComponent implements OnInit, OnDestroy {
   }
 
   onLike(id: string) {
-    this.userLiked = !this.userLiked;
-    if (this.userLiked) {
-      this.likes++;
-    } else {
-      this.likes--;
-    }
-
     this.setLikes(id);
   }
 
@@ -66,31 +94,40 @@ export class FmProjectComponent implements OnInit, OnDestroy {
   }
 
   private async getLikes() {
-    const docRef = doc(this.firestore, 'likes/' + this.item2);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const users = docSnap.data()['users'];
-      this.likes = users.length;
-      this.userLiked = users.includes(this.user.uid);
-    } else {
-      console.error('Firebase document not found.')
-    }
-
-    this.change.markForCheck();
+    this.imageCards.forEach( async card => {
+      const docRef = doc(this.firestore, 'likes/' + card.id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const users = docSnap.data()['users'];
+        card.likes = users.length;
+        card.userLiked = users.includes(this.user.uid);
+      } else {
+        if (!environment.production) {
+          console.error('Firebase document not found.');
+        }
+      }
+      this.change.markForCheck();
+    });
   }
 
   private async setLikes(id: string) {
-    const docRef = doc(this.firestore, 'likes/' + id);    
-    if (this.userLiked) {
-      await updateDoc(docRef, {
-        users: arrayUnion(this.user.uid)
-      })
-    } else {
-      await updateDoc(docRef, {
-        users: arrayRemove(this.user.uid)
-      });      
+    let update: ImageCard[] = this.imageCards.filter(card => card.id == id);
+    if (update.length) {
+      const docRef = doc(this.firestore, 'likes/' + id);    
+      if (!update[0].userLiked) {
+        update[0].likes++;
+        update[0].userLiked = true;
+        await updateDoc(docRef, {
+          users: arrayUnion(this.user.uid)
+        })
+      } else {
+        update[0].likes--;
+        update[0].userLiked = false;
+        await updateDoc(docRef, {
+          users: arrayRemove(this.user.uid)
+        });      
+      }
+      this.change.markForCheck();
     }
-
-    this.change.markForCheck();
   }
 }

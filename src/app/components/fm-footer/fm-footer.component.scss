@@ -8,13 +8,15 @@
         justify-content: center;
         background-color: black;
         color: white;
-        padding: 36px 0;
+        padding: 24px 0;
 
-        .left {
-            width: 50%;
+        .content {
+            display: flex;
+            justify-content: space-between;
         }
         a {
             color: $fm-gold;
+            display: block;
             text-decoration: none;
             cursor: pointer;
         }

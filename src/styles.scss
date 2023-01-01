@@ -9,6 +9,8 @@ $fm-red: #FF0033;
 $fm-blue-grey: #cfd8dc;
 $fm-blue-dark: #7B7ECB;
 
+$content-width: 80%;
+$max-width: 1440px;
 $nav-height: 40px;
 $form-width: 300px;
 
@@ -21,7 +23,9 @@ body {
     margin: 0; 
 }
 .content {
-    width: 60%;
+    width: $content-width;
+    max-width: $max-width;
+    padding: 0 20px;
 }
 a {
     color: $fm-blue-dark;

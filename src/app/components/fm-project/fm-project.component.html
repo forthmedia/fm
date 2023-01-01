@@ -1,40 +1,40 @@
 <div class="fm-project content">
-    <mat-card class="fm-card">
-        <mat-card-header>
-            <div mat-card-avatar class="fm-card-image"></div>
-            <mat-card-title>Richard Feynman at Starbucks</mat-card-title>
-            <mat-card-subtitle>Stable Diffusion</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image src="/assets/feynman-starbucks.jpeg" alt="AI rendered image">
-        <div hidden data.id="a548e061-1fe9-4e90-9373-90bd49c92fed"></div>
-        <mat-card-content>
-            <div>
-            Stable Diffusion is a state of the art AI model that generates images from text.
-            </div>
-        </mat-card-content>
-        <mat-card-actions>
-            <ng-container *ngIf="!isSignedIn; else signed_in">
-                <div
-                    matTooltip="Like"
-                    [matTooltipPosition]="'above'"
-                    class="likes-container"
-                    class="likes-container"
-                    (click)="onNotSignedIn()">
-                    <mat-icon class="disabled">favorite_border</mat-icon>
-                    <span class="likes">{{likes}}</span>
-                </div>                    
-            </ng-container>
-            <ng-template #signed_in>
-                <div
-                    matTooltip="Like"
-                    [matTooltipPosition]="'above'"
-                    class="likes-container"
-                    (click)="onLike('a548e061-1fe9-4e90-9373-90bd49c92fed')">
-                    <mat-icon *ngIf="!userLiked">favorite_border</mat-icon>
-                    <mat-icon *ngIf="userLiked" class="user-liked">favorite</mat-icon>
-                    <span class="likes">{{likes}}</span>
-                </div>    
-            </ng-template>
-        </mat-card-actions>    
-</mat-card>
+    <div fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="center">
+        <ng-container *ngFor="let card of imageCards">
+            <mat-card class="mat-elevation-z2 fm-card">
+                <mat-card-header>
+                    <div mat-card-avatar class="fm-card-image"></div>
+                    <mat-card-title>{{card.title}}</mat-card-title>
+                    <mat-card-subtitle>{{card.subtitle}}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image src="/assets/{{card.image}}" alt="AI rendered image">
+                <div hidden id="{{card.id}}"></div>
+                <mat-card-actions>
+                    <ng-container *ngIf="!isSignedIn; else signed_in">
+                        <div
+                            matTooltip="Like"
+                            [matTooltipPosition]="'above'"
+                            class="likes-container"
+                            class="likes-container"
+                            (click)="onNotSignedIn()">
+                            <mat-icon class="disabled">favorite_border</mat-icon>
+                            <span class="likes">{{card.likes}}</span>
+                        </div>                    
+                    </ng-container>
+                    <ng-template #signed_in>
+                        <div
+                            [matTooltip]="!card.userLiked ? 'Like' : 'Unlike'"
+                            [matTooltipPosition]="'above'"
+                            class="likes-container"
+                            (click)="onLike(card.id)">
+                            <mat-icon *ngIf="!card.userLiked">favorite_border</mat-icon>
+                            <mat-icon *ngIf="card.userLiked" class="user-liked">favorite</mat-icon>
+                            <span class="likes">{{card.likes}}</span>
+                        </div>    
+                    </ng-template>
+                </mat-card-actions>    
+            </mat-card>
+        </ng-container>
+    </div>
+    <mat-spinner *ngIf="!contentLoaded" [color]="'primary'"></mat-spinner>
 </div>
