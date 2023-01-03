@@ -72,19 +72,23 @@ export class FmProjectComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(value => {
           this.isSignedIn = value;
-          this.user = this.authService.getUser();
-          this.getLikes();
-          this.contentLoaded = true;  
-          this.change.markForCheck();
+          if(this.isSignedIn) {
+            this.user = this.authService.getUser();
+            this.getLikes();
+            this.contentLoaded = true;  
+            this.change.markForCheck();  
+          }
       });
 
       this.authService.getIsAnonymous()
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(value => {
           this.isAnonymous = value;
-          this.getLikes();
-          this.contentLoaded = true;  
-          this.change.markForCheck();
+          if (this.isAnonymous) {
+            this.getLikes();
+            this.contentLoaded = true;  
+            this.change.markForCheck();  
+          }
         })
     });
   }

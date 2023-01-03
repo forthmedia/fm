@@ -10,7 +10,7 @@ export const FIREBASE_AUTH_OK: string = '';
 })
 export class AuthService {
   private isSignedIn: boolean = false;
-  private isAnonymous: boolean = true;
+  private isAnonymous: boolean = false;
   private user: User = {} as User;
 
   constructor(
