@@ -10,7 +10,7 @@
                 <img mat-card-image src="/assets/{{card.image}}" alt="AI rendered image">
                 <div hidden id="{{card.id}}"></div>
                 <mat-card-actions>
-                    <ng-container *ngIf="!isSignedIn; else signed_in">
+                    <ng-container *ngIf="isAnonymous; else signed_in">
                         <div
                             matTooltip="Like"
                             [matTooltipPosition]="'above'"

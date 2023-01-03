@@ -10,18 +10,21 @@ export const FIREBASE_AUTH_OK: string = '';
 })
 export class AuthService {
   private isSignedIn: boolean = false;
+  private isAnonymous: boolean = true;
   private user: User = {} as User;
 
   constructor(
     private auth: Auth
   ) {
     onAuthStateChanged(auth, user => {
-      if (user) {
+      if (user && !user.isAnonymous) {
         this.isSignedIn = true;
+        this.isAnonymous = false;
         this.user.displayName = user.displayName!;
         this.user.uid = user.uid;
       } else {
         this.isSignedIn = false;
+        this.isAnonymous = true;
         this.user = {} as User;
       }
     });
@@ -68,5 +71,9 @@ export class AuthService {
   
   public getIsSignedIn(): Observable<boolean> {
     return observableOf(this.isSignedIn);
+  }
+
+  public getIsAnonymous(): Observable<boolean> {
+    return observableOf(this.isAnonymous);
   }
 }

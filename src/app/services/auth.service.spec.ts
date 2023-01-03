@@ -54,4 +54,9 @@ describe('AuthService', () => {
     expect(service['isSignedIn']).toBeDefined();
     expect(service.getIsSignedIn).toBeDefined();
   })
+
+  it('should have getIsAnonymous function', () => {
+    expect(service['isAnonymous']).toBeDefined();
+    expect(service.getIsAnonymous).toBeDefined();
+  })
 });

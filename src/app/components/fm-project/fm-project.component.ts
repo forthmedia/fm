@@ -52,6 +52,7 @@ const IMAGE_CARD_DATA: ImageCard[] = [
 })
 export class FmProjectComponent implements OnInit, OnDestroy {
   isSignedIn?: boolean;
+  isAnonymous?: boolean;
   private user: User = {} as User;
   private unsubscribe = new Subject<void>();
   imageCards = IMAGE_CARD_DATA;
@@ -71,13 +72,21 @@ export class FmProjectComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(value => {
           this.isSignedIn = value;
+          this.user = this.authService.getUser();
+          this.getLikes();
+          this.contentLoaded = true;  
           this.change.markForCheck();
-      });      
-    });
+      });
 
-    this.user = this.authService.getUser();
-    this.getLikes();
-    this.contentLoaded = true;
+      this.authService.getIsAnonymous()
+        .pipe(takeUntil(this.unsubscribe))
+        .subscribe(value => {
+          this.isAnonymous = value;
+          this.getLikes();
+          this.contentLoaded = true;  
+          this.change.markForCheck();
+        })
+    });
   }
 
   ngOnDestroy(): void {
@@ -86,7 +95,9 @@ export class FmProjectComponent implements OnInit, OnDestroy {
   }
 
   onLike(id: string) {
-    this.setLikes(id);
+    if (!this.isAnonymous) {
+      this.setLikes(id);
+    }
   }
 
   onNotSignedIn() {
