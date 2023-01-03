@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Auth, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, onAuthStateChanged, signInAnonymously } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
 import { Firestore, arrayUnion, arrayRemove, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Subject, takeUntil } from 'rxjs';
@@ -88,6 +88,8 @@ export class FmProjectComponent implements OnInit, OnDestroy {
             this.getLikes();
             this.contentLoaded = true;  
             this.change.markForCheck();  
+          } else {
+            signInAnonymously(this.auth);
           }
         })
     });
