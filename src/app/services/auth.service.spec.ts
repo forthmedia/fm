@@ -53,10 +53,13 @@ describe('AuthService', () => {
   it('should have getIsSignedIn function', () => {
     expect(service['isSignedIn']).toBeDefined();
     expect(service.getIsSignedIn).toBeDefined();
-  })
+  });
 
-  it('should have getIsAnonymous function', () => {
+  it('should have isAnonymous', () => {
     expect(service['isAnonymous']).toBeDefined();
-    expect(service.getIsAnonymous).toBeDefined();
-  })
+  });
+
+  it('should have isValidUser function', () => {
+    expect(service.isValidUser).toBeDefined();
+  });
 });

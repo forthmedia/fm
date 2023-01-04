@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Auth, onAuthStateChanged, signInAnonymously } from '@angular/fire/auth';
+import { Auth, signInAnonymously } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
 import { Firestore, arrayUnion, arrayRemove, doc, getDoc, updateDoc } from '@angular/fire/firestore';
-import { Subject, takeUntil } from 'rxjs';
 
 import { FmSigninDialog } from '../fm-signin-dialog/fm-signin-dialog.component';
 import { User } from '../../models/user';
@@ -50,11 +49,10 @@ const IMAGE_CARD_DATA: ImageCard[] = [
   styleUrls: ['./fm-project.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FmProjectComponent implements OnInit, OnDestroy {
+export class FmProjectComponent implements OnInit {
   isSignedIn?: boolean;
   isAnonymous?: boolean;
   private user: User = {} as User;
-  private unsubscribe = new Subject<void>();
   imageCards = IMAGE_CARD_DATA;
   contentLoaded: boolean = false;
 
@@ -67,39 +65,27 @@ export class FmProjectComponent implements OnInit, OnDestroy {
     ) {}
 
   ngOnInit(): void {
-    onAuthStateChanged(this.auth, () => {
-      this.authService.getIsSignedIn()
-        .pipe(takeUntil(this.unsubscribe))
-        .subscribe(value => {
-          this.isSignedIn = value;
-          if(this.isSignedIn) {
-            this.user = this.authService.getUser();
-            this.getLikes();
-            this.contentLoaded = true;  
-            this.change.markForCheck();  
-          }
+    this.authService.isValidUser()
+      .then(result => {
+        if (result) {
+          this.isSignedIn = true;
+          this.isAnonymous = false;
+          this.user = this.authService.getUser();
+          this.getLikes();
+          this.contentLoaded = true;  
+          this.change.markForCheck();  
+        } else {
+          signInAnonymously(this.auth)
+            .then(() => {
+              this.isSignedIn = false;
+              this.isAnonymous = true;
+              this.getLikes();
+              this.contentLoaded = true;  
+              this.change.markForCheck();  
+            });
+        }
       });
-
-      this.authService.getIsAnonymous()
-        .pipe(takeUntil(this.unsubscribe))
-        .subscribe(value => {
-          this.isAnonymous = value;
-          if (this.isAnonymous) {
-            this.getLikes();
-            this.contentLoaded = true;  
-            this.change.markForCheck();  
-          } else {
-            signInAnonymously(this.auth);
-          }
-        })
-    });
   }
-
-  ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();  
-  }
-
   onLike(id: string) {
     if (!this.isAnonymous) {
       this.setLikes(id);

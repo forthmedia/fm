@@ -73,7 +73,19 @@ export class AuthService {
     return observableOf(this.isSignedIn);
   }
 
-  public getIsAnonymous(): Observable<boolean> {
-    return observableOf(this.isAnonymous);
+  public async isValidUser(): Promise<boolean> {
+    try {
+      await new Promise<boolean>((resolve, reject) => {
+        const user = this.auth.currentUser;
+        if (user) {
+          resolve(user !== null)
+        } else {
+          reject(false)
+        }
+      })
+      return true;
+    } catch(error) {
+      return false;
+    }
   }
 }
