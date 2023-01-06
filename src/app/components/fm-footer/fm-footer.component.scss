@@ -19,6 +19,9 @@
             display: block;
             text-decoration: none;
             cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
         }
         .firebase {
             width: 100px;

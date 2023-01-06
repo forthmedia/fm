@@ -1,0 +1,15 @@
+@import 'src/styles.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: $nav-height;
+    padding-bottom: $nav-height;
+
+    .fm-info {
+        div {
+            white-space: pre-wrap;
+        }
+    }
+}

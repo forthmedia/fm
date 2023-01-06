@@ -26,6 +26,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { provideFirestore, getFirestore, connectFirestoreEmulator } from '@angular/fire/firestore';
 import { FmSigninDialog } from './components/fm-signin-dialog/fm-signin-dialog.component';
+import { FmInfoComponent } from './components/fm-info/fm-info.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +39,7 @@ import { FmSigninDialog } from './components/fm-signin-dialog/fm-signin-dialog.c
     FmLoginComponent,
     FmDashboardComponent,
     FmSigninDialog,
+    FmInfoComponent,
   ],
   imports: [
     BrowserModule,
