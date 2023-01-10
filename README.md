@@ -12,6 +12,7 @@ Phase 5: Firestore integration. UI upadtes.
 5.7: Mobile design.  
 5.8: Firebase anonymous authentication.  
 5.9: Info component with Terms and Privacy.  
+5.10: Configuration update.  
 
 Phase 4: Baseline Dashboard extras and Blog promo.  
 4.1: Icon branding. Cross link. Like button on Project page if signed in.   
